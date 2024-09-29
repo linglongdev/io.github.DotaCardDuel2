@@ -1,0 +1,28 @@
+version: "1"
+
+package:
+  id: io.github.DotaCardDuel2
+  name: DotaCardDuel2
+  version: 0.0.0.1
+  kind: app
+  description: |
+    Yu-Gi-Oh! for Dota2 with Qt GUI Framework
+
+command:
+  - /opt/apps/io.github.DotaCardDuel2/files/bin/DotaCard
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/abc881858/DotaCardDuel2.git
+    version: master
+    commit: a130ebd1abd0128900135d99e0ee89e45e519a29
+
+build: |
+  cd /project/linglong/sources/DotaCardDuel2.git
+  git apply ../../../0001-install.patch
+  qmake -makefile PREFIX=${PREFIX} LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
+  make -j$(nproc)
+  make install
